@@ -5,25 +5,25 @@ import { Target, Rocket, Globe, Users, DollarSign, TrendingUp, UserCheck, Zap, B
 
 const fundingBreakdown = [
   {
+    category: 'Customer Acquisition',
+    percentage: '45%',
+    amount: '$135K',
+    description: 'Marketing, sales, and customer expansion',
+    icon: Users,
+    color: 'from-blue-500 to-cyan-600',
+  },
+  {
     category: 'Production & Beta',
-    percentage: '40%',
-    amount: '$80K',
+    percentage: '30%',
+    amount: '$90K',
     description: 'Expand private beta into full production',
     icon: Rocket,
     color: 'from-orange-500 to-red-600',
   },
   {
-    category: 'Customer Success',
-    percentage: '35%',
-    amount: '$70K',
-    description: 'Accelerate onboarding and customer success',
-    icon: Users,
-    color: 'from-blue-500 to-cyan-600',
-  },
-  {
     category: 'Infrastructure & Agents',
     percentage: '25%',
-    amount: '$50K',
+    amount: '$75K',
     description: 'Deepen real-time infrastructure and agent ecosystem',
     icon: Activity,
     color: 'from-green-500 to-emerald-600',
@@ -33,21 +33,21 @@ const fundingBreakdown = [
 const milestones = [
   {
     timeline: 'Month 1',
-    goal: 'Production Launch',
-    metric: 'Beta → Production',
-    details: 'Complete private beta transition',
+    goal: 'Marketing Launch',
+    metric: 'Acquisition Campaign',
+    details: 'Launch aggressive customer acquisition strategy',
   },
   {
     timeline: 'Month 2',
-    goal: 'Customer Acceleration',
-    metric: '3 Active Customers',
-    details: 'Streamlined onboarding process',
+    goal: 'Customer Expansion',
+    metric: '10+ New Customers',
+    details: 'Accelerate sales and onboarding',
   },
   {
     timeline: 'Month 3',
-    goal: 'Infrastructure Scale',
-    metric: 'Real-time Agent Ecosystem',
-    details: 'Enhanced infrastructure capabilities',
+    goal: 'Revenue Scale',
+    metric: '$50K+ MRR',
+    details: 'Double recurring revenue',
   },
 ]
 
@@ -70,7 +70,7 @@ export default function AskSlide() {
             </div>
             <div className="flex-1">
               <blockquote className="text-sm text-gray-200 italic leading-relaxed mb-2">
-                "We're looking to raise $200,000 initially from a strong accelerator program like Elev X."
+                "We're looking to raise $300,000 initially from a strong accelerator program like Elev X."
               </blockquote>
               
               <p className="text-xs text-gray-300 mb-2 leading-relaxed">
@@ -98,14 +98,13 @@ export default function AskSlide() {
               <div className="flex items-center justify-center gap-2 mb-3">
                 <DollarSign className="w-6 h-6 text-orange-400" />
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                  $200K
+                  300K
                 </div>
               </div>
-
-              {/* Elev X Badge */}
-              <div className="inline-block bg-gradient-to-r from-purple-500 to-blue-600 text-white px-3 py-1 rounded-md font-bold text-xs">
-                🚀 Elev X Ignite Partner Opportunity
-              </div>
+              
+              <p className="text-sm text-gray-300 mb-4">
+                To accelerate customer acquisition and commercial scaling
+              </p>
             </div>
           </div>
         </div>

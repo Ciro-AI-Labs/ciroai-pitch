@@ -98,7 +98,7 @@ export default function ClosingSlide() {
         {/* Thank you and Contact - Ultra Compact */}
         <div className="text-center mb-3">
           <h3 className="text-lg font-bold text-white mb-3">
-            Thank You, NEC X & Elev X! Ignite
+            Thank You!
           </h3>
           
           {/* Contact Grid - Ultra Compact */}

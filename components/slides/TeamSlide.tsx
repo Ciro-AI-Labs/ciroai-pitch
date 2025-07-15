@@ -8,9 +8,9 @@ const teamMembers = [
     name: 'Victor Amaya',
     title: 'CEO',
     subtitle: '2x Exited Founder',
-    background: 'Architected real-time engines for Kraken, Meta, Epic',
+    background: 'Architected real-time engines for Kraken, Skalex, ViRSE, Nvidia',
     expertise: ['Real-time Systems', 'Scalable Architecture', 'Financial Tech'],
-    companies: ['Meta', 'Kraken', 'Epic'],
+    companies: ['Kraken', 'Skalex', 'ViRSE', 'Nvidia'],
     color: 'from-orange-500 to-red-600',
     image: '/images/UgY3lK5y_400x400.jpg',
   },
@@ -18,9 +18,9 @@ const teamMembers = [
     name: 'Gloria Polio',
     title: 'COO',
     subtitle: 'Industrial Operations Leader',
-    background: 'Implemented ISO/HACCP systems at Diana, Vitali',
+    background: 'Implemented ISO/HACCP systems at Diana, Vitali, Sygma Alimentos, Grupo Calvo',
     expertise: ['Industrial Operations', 'Compliance Systems', 'Process Optimization'],
-    companies: ['Diana', 'Vitali'],
+    companies: ['Diana', 'Vitali', 'Sygma Alimentos', 'Grupo Calvo'],
     color: 'from-blue-500 to-cyan-600',
     image: '/images/gloriaheadhost.jpeg',
   },
@@ -30,6 +30,7 @@ const advisors = [
   { company: 'XFounders', expertise: 'Startup Accelerator', icon: '🚀' },
   { company: 'Grupo Campestre', expertise: 'Industrial Operations', icon: '🏭' },
   { company: 'Diana El Salvador', expertise: 'Food Manufacturing', icon: '🏢' },
+  { company: 'Nvidia Inception', expertise: 'AI Partnership Program', icon: 'nvidia-badge', image: '/images/nvidia-inception-program-badge-rgb-for-screen.png' },
 ]
 
 export default function TeamSlide() {
@@ -136,13 +137,25 @@ export default function TeamSlide() {
                 Backed by Industry Leaders
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {advisors.map((advisor, index) => (
                   <div
                     key={index}
                     className="bg-gray-700/40 backdrop-blur-sm border border-gray-600/50 rounded-lg p-4 text-center"
                   >
-                    <div className="text-3xl mb-3">{advisor.icon}</div>
+                    <div className="mb-3 flex justify-center items-center h-12">
+                      {advisor.icon === 'nvidia-badge' && advisor.image ? (
+                        <Image
+                          src={advisor.image}
+                          alt={advisor.company}
+                          width={80}
+                          height={40}
+                          className="object-contain"
+                        />
+                      ) : (
+                        <div className="text-3xl">{advisor.icon}</div>
+                      )}
+                    </div>
                     <div className="text-lg font-bold text-white mb-1">
                       {advisor.company}
                     </div>

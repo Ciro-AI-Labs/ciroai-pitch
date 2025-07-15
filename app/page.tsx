@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 
-// Import slide components
+// Import slide components - English
 import OpeningSlide from '../components/slides/OpeningSlide'
 import ProblemSlide from '../components/slides/ProblemSlide'
 import SolutionSlide from '../components/slides/SolutionSlide'
@@ -18,25 +18,59 @@ import TeamSlide from '../components/slides/TeamSlide'
 import AskSlide from '../components/slides/AskSlide'
 import ClosingSlide from '../components/slides/ClosingSlide'
 
-const slides = [
-  { id: 1, title: 'Opening Statement', component: OpeningSlide },
-  { id: 2, title: 'Problem Statement', component: ProblemSlide },
-  { id: 3, title: 'Our Solution - CIRO AI', component: SolutionSlide },
-  { id: 4, title: 'What Makes CIRO Different', component: DifferentiatorSlide },
-  { id: 5, title: 'Case Studies & Real Impact', component: CaseStudiesSlide },
-  { id: 6, title: 'Business Model & Traction', component: TractionSlide },
-  { id: 7, title: 'Why Now & Why Us', component: WhyNowSlide },
-  { id: 8, title: 'Market Opportunity', component: MarketSlide },
-  { id: 9, title: 'The Future of CIRO', component: FutureSlide },
-  { id: 10, title: 'Our Team', component: TeamSlide },
-  { id: 11, title: 'The Ask', component: AskSlide },
-  { id: 12, title: 'Closing Statement', component: ClosingSlide },
-]
+// Import slide components - Spanish
+import OpeningSlideEs from '../components/slides/OpeningSlideEs'
+import ProblemSlideEs from '../components/slides/ProblemSlideEs'
+import SolutionSlideEs from '../components/slides/SolutionSlideEs'
+import DifferentiatorSlideEs from '../components/slides/DifferentiatorSlideEs'
+import CaseStudiesSlideEs from '../components/slides/CaseStudiesSlideEs'
+import TractionSlideEs from '../components/slides/TractionSlideEs'
+import WhyNowSlideEs from '../components/slides/WhyNowSlideEs'
+import MarketSlideEs from '../components/slides/MarketSlideEs'
+import FutureSlideEs from '../components/slides/FutureSlideEs'
+import TeamSlideEs from '../components/slides/TeamSlideEs'
+import AskSlideEs from '../components/slides/AskSlideEs'
+import ClosingSlideEs from '../components/slides/ClosingSlideEs'
+
+const slidesData = {
+  en: [
+    { id: 1, title: 'Opening Statement', component: OpeningSlide },
+    { id: 2, title: 'Problem Statement', component: ProblemSlide },
+    { id: 3, title: 'Our Solution - CIRO AI', component: SolutionSlide },
+    { id: 4, title: 'What Makes CIRO Different', component: DifferentiatorSlide },
+    { id: 5, title: 'Case Studies & Real Impact', component: CaseStudiesSlide },
+    { id: 6, title: 'Business Model & Traction', component: TractionSlide },
+    { id: 7, title: 'Why Now & Why Us', component: WhyNowSlide },
+    { id: 8, title: 'Market Opportunity', component: MarketSlide },
+    { id: 9, title: 'The Future of CIRO', component: FutureSlide },
+    { id: 10, title: 'Our Team', component: TeamSlide },
+    { id: 11, title: 'The Ask', component: AskSlide },
+    { id: 12, title: 'Closing Statement', component: ClosingSlide },
+  ],
+  es: [
+    { id: 1, title: 'El Costo Real de las demoras', component: OpeningSlideEs },
+    { id: 2, title: 'Declaración del Problema', component: ProblemSlideEs },
+    { id: 3, title: 'Nuestra Solución - CIRO AI', component: SolutionSlideEs },
+    { id: 4, title: 'Lo que Hace a CIRO Diferente', component: DifferentiatorSlideEs },
+    { id: 5, title: 'Casos de Estudio e Impacto Real', component: CaseStudiesSlideEs },
+    { id: 6, title: 'Modelo de Negocio y Tracción', component: TractionSlideEs },
+    { id: 7, title: 'Por Qué Ahora y Por Qué Nosotros', component: WhyNowSlideEs },
+    { id: 8, title: 'Oportunidad de Mercado', component: MarketSlideEs },
+    { id: 9, title: 'El Futuro de CIRO', component: FutureSlideEs },
+    { id: 10, title: 'Nuestro Equipo', component: TeamSlideEs },
+    { id: 11, title: 'La Propuesta', component: AskSlideEs },
+    { id: 12, title: 'Declaración de Cierre', component: ClosingSlideEs },
+  ]
+}
 
 export default function PitchDeck() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPresenting, setIsPresenting] = useState(false)
   const [timeOnSlide, setTimeOnSlide] = useState(0)
+  const [language, setLanguage] = useState('en') // 'en' or 'es'
+  
+  // Get slides for current language
+  const slides = slidesData[language as keyof typeof slidesData]
 
   // Fullscreen functionality
   const enterFullscreen = async () => {
@@ -155,15 +189,41 @@ export default function PitchDeck() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white overflow-hidden">
-      {/* Presentation Mode Toggle */}
+      {/* Presentation Mode Toggle and Language Selector */}
       <div className={`fixed top-4 left-4 z-50 transition-opacity duration-300 ${isPresenting ? 'opacity-0' : 'opacity-100'}`}>
-        <button
-          onClick={togglePresentation}
-          className="flex items-center gap-2 px-4 py-2 bg-ciro-500 hover:bg-ciro-600 rounded-lg transition-colors"
-        >
-          {isPresenting ? <Pause size={16} /> : <Play size={16} />}
-          Present
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={togglePresentation}
+            className="flex items-center gap-2 px-4 py-2 bg-ciro-500 hover:bg-ciro-600 rounded-lg transition-colors"
+          >
+            {isPresenting ? <Pause size={16} /> : <Play size={16} />}
+            Present
+          </button>
+          
+          {/* Language Selector */}
+          <div className="flex items-center bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600 p-1">
+            <button
+              onClick={() => setLanguage('en')}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                language === 'en' 
+                  ? 'bg-ciro-500 text-white' 
+                  : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLanguage('es')}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                language === 'es' 
+                  ? 'bg-ciro-500 text-white' 
+                  : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              ES
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Slide Counter */}
