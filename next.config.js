@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  // Removed output: 'export' for Vercel's native Next.js support
+  // Removed trailingSlash and unoptimized images for better Vercel optimization
   images: {
-    unoptimized: true,
+    domains: [], // Add any external image domains if needed
   },
-  basePath: '',
 }
 
 module.exports = nextConfig 
