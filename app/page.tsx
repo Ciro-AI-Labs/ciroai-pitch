@@ -8,9 +8,11 @@ import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import OpeningSlide from '../components/slides/OpeningSlide'
 import ProblemSlide from '../components/slides/ProblemSlide'
 import SolutionSlide from '../components/slides/SolutionSlide'
+import SolutionSlideNew from '../components/slides/SolutionSlideNew'
 import DifferentiatorSlide from '../components/slides/DifferentiatorSlide'
 import CaseStudiesSlide from '../components/slides/CaseStudiesSlide'
 import TractionSlide from '../components/slides/TractionSlide'
+import PartnersSlide from '../components/slides/PartnersSlide'
 import WhyNowSlide from '../components/slides/WhyNowSlide'
 import MarketSlide from '../components/slides/MarketSlide'
 import FutureSlide from '../components/slides/FutureSlide'
@@ -22,9 +24,11 @@ import ClosingSlide from '../components/slides/ClosingSlide'
 import OpeningSlideEs from '../components/slides/OpeningSlideEs'
 import ProblemSlideEs from '../components/slides/ProblemSlideEs'
 import SolutionSlideEs from '../components/slides/SolutionSlideEs'
+import SolutionSlideNewEs from '../components/slides/SolutionSlideNewEs'
 import DifferentiatorSlideEs from '../components/slides/DifferentiatorSlideEs'
 import CaseStudiesSlideEs from '../components/slides/CaseStudiesSlideEs'
 import TractionSlideEs from '../components/slides/TractionSlideEs'
+import PartnersSlideEs from '../components/slides/PartnersSlideEs'
 import WhyNowSlideEs from '../components/slides/WhyNowSlideEs'
 import MarketSlideEs from '../components/slides/MarketSlideEs'
 import FutureSlideEs from '../components/slides/FutureSlideEs'
@@ -37,29 +41,33 @@ const slidesData = {
     { id: 1, title: 'Opening Statement', component: OpeningSlide },
     { id: 2, title: 'Problem Statement', component: ProblemSlide },
     { id: 3, title: 'Our Solution - CIRO AI', component: SolutionSlide },
-    { id: 4, title: 'What Makes CIRO Different', component: DifferentiatorSlide },
-    { id: 5, title: 'Case Studies & Real Impact', component: CaseStudiesSlide },
-    { id: 6, title: 'Business Model & Traction', component: TractionSlide },
-    { id: 7, title: 'Why Now & Why Us', component: WhyNowSlide },
-    { id: 8, title: 'Market Opportunity', component: MarketSlide },
-    { id: 9, title: 'The Future of CIRO', component: FutureSlide },
-    { id: 10, title: 'Our Team', component: TeamSlide },
-    { id: 11, title: 'The Ask', component: AskSlide },
-    { id: 12, title: 'Closing Statement', component: ClosingSlide },
+    { id: 4, title: 'Your 24/7 AI Team', component: SolutionSlideNew },
+    { id: 5, title: 'What Makes CIRO Different', component: DifferentiatorSlide },
+    { id: 6, title: 'Case Studies & Real Impact', component: CaseStudiesSlide },
+    { id: 7, title: 'Business Model & Traction', component: TractionSlide },
+    { id: 8, title: 'Partners & Clients', component: PartnersSlide },
+    { id: 9, title: 'Why Now & Why Us', component: WhyNowSlide },
+    { id: 10, title: 'Market Opportunity', component: MarketSlide },
+    { id: 11, title: 'The Future of CIRO', component: FutureSlide },
+    { id: 12, title: 'Our Team', component: TeamSlide },
+    { id: 13, title: 'The Ask', component: AskSlide },
+    { id: 14, title: 'Closing Statement', component: ClosingSlide },
   ],
   es: [
     { id: 1, title: 'El Costo Real de las demoras', component: OpeningSlideEs },
     { id: 2, title: 'Declaración del Problema', component: ProblemSlideEs },
     { id: 3, title: 'Nuestra Solución - CIRO AI', component: SolutionSlideEs },
-    { id: 4, title: 'Lo que Hace a CIRO Diferente', component: DifferentiatorSlideEs },
-    { id: 5, title: 'Casos de Estudio e Impacto Real', component: CaseStudiesSlideEs },
-    { id: 6, title: 'Modelo de Negocio y Tracción', component: TractionSlideEs },
-    { id: 7, title: 'Por Qué Ahora y Por Qué Nosotros', component: WhyNowSlideEs },
-    { id: 8, title: 'Oportunidad de Mercado', component: MarketSlideEs },
-    { id: 9, title: 'El Futuro de CIRO', component: FutureSlideEs },
-    { id: 10, title: 'Nuestro Equipo', component: TeamSlideEs },
-    { id: 11, title: 'La Propuesta', component: AskSlideEs },
-    { id: 12, title: 'Declaración de Cierre', component: ClosingSlideEs },
+    { id: 4, title: 'Tu Equipo de IA 24/7', component: SolutionSlideNewEs },
+    { id: 5, title: 'Lo que Hace a CIRO Diferente', component: DifferentiatorSlideEs },
+    { id: 6, title: 'Casos de Estudio e Impacto Real', component: CaseStudiesSlideEs },
+    { id: 7, title: 'Modelo de Negocio y Tracción', component: TractionSlideEs },
+    { id: 8, title: 'Socios y Clientes', component: PartnersSlideEs },
+    { id: 9, title: 'Por Qué Ahora y Por Qué Nosotros', component: WhyNowSlideEs },
+    { id: 10, title: 'Oportunidad de Mercado', component: MarketSlideEs },
+    { id: 11, title: 'El Futuro de CIRO', component: FutureSlideEs },
+    { id: 12, title: 'Nuestro Equipo', component: TeamSlideEs },
+    { id: 13, title: 'La Propuesta', component: AskSlideEs },
+    { id: 14, title: 'Declaración de Cierre', component: ClosingSlideEs },
   ]
 }
 
