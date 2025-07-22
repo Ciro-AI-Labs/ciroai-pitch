@@ -55,7 +55,7 @@ export default function TractionSlide() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-4 gap-4 mb-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6"
         >
           <div className="bg-gradient-to-br from-ciro-600/20 to-orange-600/20 border border-ciro-500/30 rounded-lg p-3 text-center">
             <DollarSign className="w-6 h-6 text-ciro-400 mx-auto mb-2" />

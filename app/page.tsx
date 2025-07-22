@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Pause, Menu, X } from 'lucide-react'
 
 // Import slide components - English
 import OpeningSlide from '../components/slides/OpeningSlide'
@@ -17,7 +17,6 @@ import WhyNowSlide from '../components/slides/WhyNowSlide'
 import MarketSlide from '../components/slides/MarketSlide'
 import FutureSlide from '../components/slides/FutureSlide'
 import TeamSlide from '../components/slides/TeamSlide'
-import AskSlide from '../components/slides/AskSlide'
 import ClosingSlide from '../components/slides/ClosingSlide'
 
 // Import slide components - Spanish
@@ -33,7 +32,6 @@ import WhyNowSlideEs from '../components/slides/WhyNowSlideEs'
 import MarketSlideEs from '../components/slides/MarketSlideEs'
 import FutureSlideEs from '../components/slides/FutureSlideEs'
 import TeamSlideEs from '../components/slides/TeamSlideEs'
-import AskSlideEs from '../components/slides/AskSlideEs'
 import ClosingSlideEs from '../components/slides/ClosingSlideEs'
 
 const slidesData = {
@@ -50,8 +48,7 @@ const slidesData = {
     { id: 10, title: 'Market Opportunity', component: MarketSlide },
     { id: 11, title: 'The Future of CIRO', component: FutureSlide },
     { id: 12, title: 'Our Team', component: TeamSlide },
-    { id: 13, title: 'The Ask', component: AskSlide },
-    { id: 14, title: 'Closing Statement', component: ClosingSlide },
+    { id: 13, title: 'Closing Statement', component: ClosingSlide },
   ],
   es: [
     { id: 1, title: 'El Costo Real de las demoras', component: OpeningSlideEs },
@@ -66,8 +63,7 @@ const slidesData = {
     { id: 10, title: 'Oportunidad de Mercado', component: MarketSlideEs },
     { id: 11, title: 'El Futuro de CIRO', component: FutureSlideEs },
     { id: 12, title: 'Nuestro Equipo', component: TeamSlideEs },
-    { id: 13, title: 'La Propuesta', component: AskSlideEs },
-    { id: 14, title: 'Declaración de Cierre', component: ClosingSlideEs },
+    { id: 13, title: 'Declaración de Cierre', component: ClosingSlideEs },
   ]
 }
 
@@ -76,6 +72,14 @@ export default function PitchDeck() {
   const [isPresenting, setIsPresenting] = useState(false)
   const [timeOnSlide, setTimeOnSlide] = useState(0)
   const [language, setLanguage] = useState('en') // 'en' or 'es'
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [showSwipeHint, setShowSwipeHint] = useState(false)
+  
+  // Touch/swipe handling refs
+  const touchStartX = useRef<number>(0)
+  const touchEndX = useRef<number>(0)
+  const touchStartY = useRef<number>(0)
+  const touchEndY = useRef<number>(0)
   
   // Get slides for current language
   const slides = slidesData[language as keyof typeof slidesData]
@@ -191,14 +195,78 @@ export default function PitchDeck() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
+    setIsMobileMenuOpen(false) // Close mobile menu when navigating
+  }
+
+  // Touch/swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+    
+    // Show swipe hint briefly on first touch in presentation mode
+    if (isPresenting && window.innerWidth < 768) {
+      setShowSwipeHint(true)
+      setTimeout(() => setShowSwipeHint(false), 2000)
+    }
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+    touchEndY.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current || !touchStartY.current || !touchEndY.current) return
+    
+    const deltaX = touchStartX.current - touchEndX.current
+    const deltaY = touchStartY.current - touchEndY.current
+    const absDeltaX = Math.abs(deltaX)
+    const absDeltaY = Math.abs(deltaY)
+    
+    // Only process horizontal swipes that are primarily horizontal (not vertical scrolling)
+    if (absDeltaX > absDeltaY && absDeltaX > 50) {
+      if (deltaX > 0) {
+        // Swipe left - next slide
+        nextSlide()
+      } else {
+        // Swipe right - previous slide
+        prevSlide()
+      }
+    }
   }
 
   const CurrentSlideComponent = slides[currentSlide]?.component
 
   return (
-    <div className="h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white overflow-hidden">
-      {/* Presentation Mode Toggle and Language Selector */}
-      <div className={`fixed top-4 left-4 z-50 transition-opacity duration-300 ${isPresenting ? 'opacity-0' : 'opacity-100'}`}>
+    <div 
+      className="h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Mobile Menu Button / Exit Presentation */}
+      <div className="fixed top-4 left-4 z-50 md:hidden">
+        {isPresenting ? (
+          <button
+            onClick={togglePresentation}
+            className="p-3 bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600 hover:bg-dark-700 transition-all opacity-60 hover:opacity-100"
+            aria-label="Exit presentation"
+          >
+            <X size={20} />
+          </button>
+        ) : (
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-3 bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600 hover:bg-dark-700 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        )}
+      </div>
+
+      {/* Desktop Presentation Mode Toggle and Language Selector */}
+      <div className={`fixed top-4 left-4 z-50 transition-opacity duration-300 ${isPresenting ? 'opacity-0' : 'opacity-100'} hidden md:block`}>
         <div className="flex items-center gap-3">
           <button
             onClick={togglePresentation}
@@ -235,22 +303,67 @@ export default function PitchDeck() {
       </div>
 
       {/* Slide Counter */}
-      <div className={`fixed top-4 right-4 z-50 transition-opacity duration-300 ${isPresenting ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="px-4 py-2 bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600">
-          <span className="text-sm font-mono">
+      <div className={`fixed top-4 right-4 z-50 transition-opacity duration-300 ${isPresenting ? 'opacity-60 hover:opacity-100 md:opacity-0' : 'opacity-100'}`}>
+        <div className="px-3 py-2 md:px-4 md:py-2 bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600">
+          <span className="text-xs md:text-sm font-mono">
             {currentSlide + 1} / {slides.length}
           </span>
           {isPresenting && (
-            <span className="ml-3 text-xs text-gray-400">
+            <span className="ml-2 md:ml-3 text-xs text-gray-400">
               {Math.floor(timeOnSlide / 60)}:{(timeOnSlide % 60).toString().padStart(2, '0')}
             </span>
           )}
         </div>
       </div>
 
-      {/* Navigation Controls */}
+      {/* Swipe Hint for Mobile Presentation Mode */}
+      {isPresenting && showSwipeHint && (
+        <div className="fixed inset-0 z-30 pointer-events-none md:hidden">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-dark-800/90 backdrop-blur-sm rounded-lg px-6 py-3 border border-dark-600">
+            <div className="flex items-center gap-3 text-gray-300">
+              <div className="flex items-center gap-1">
+                <ChevronLeft size={16} />
+                <span className="text-sm">Swipe</span>
+                <ChevronRight size={16} />
+              </div>
+              <span className="text-sm">to navigate</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Navigation Controls - Bottom (Always visible) */}
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
+        <div className={`flex items-center gap-4 px-4 py-3 bg-dark-800/80 backdrop-blur-sm rounded-full border border-dark-600 transition-opacity duration-300 ${
+          isPresenting ? 'opacity-60 hover:opacity-100' : 'opacity-100'
+        }`}>
+          <button
+            onClick={prevSlide}
+            disabled={currentSlide === 0}
+            className="p-3 hover:bg-dark-700 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          
+          <span className="text-xs font-mono text-gray-300 px-2">
+            {currentSlide + 1} / {slides.length}
+          </span>
+
+          <button
+            onClick={nextSlide}
+            disabled={currentSlide === slides.length - 1}
+            className="p-3 hover:bg-dark-700 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Next slide"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop Navigation Controls */}
       {!isPresenting && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
           <div className="flex items-center gap-4 px-6 py-3 bg-dark-800/80 backdrop-blur-sm rounded-full border border-dark-600">
             <button
               onClick={prevSlide}
@@ -283,9 +396,85 @@ export default function PitchDeck() {
         </div>
       )}
 
-      {/* Slide Navigation Menu */}
+      {/* Mobile Slide Navigation Menu */}
       {!isPresenting && (
-        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40">
+        <div className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}>
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Menu Panel */}
+          <div className={`absolute top-0 left-0 w-80 max-w-[90vw] h-full bg-dark-900 border-r border-dark-600 p-4 transform transition-transform duration-300 ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}>
+            <div className="mb-6">
+              <h3 className="text-lg font-bold text-white mb-4">Slides</h3>
+              
+              {/* Language Selector - Mobile */}
+              <div className="flex items-center bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600 p-1 mb-4">
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`flex-1 px-3 py-2 rounded text-sm font-medium transition-colors ${
+                    language === 'en' 
+                      ? 'bg-ciro-500 text-white' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => setLanguage('es')}
+                  className={`flex-1 px-3 py-2 rounded text-sm font-medium transition-colors ${
+                    language === 'es' 
+                      ? 'bg-ciro-500 text-white' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  Español
+                </button>
+              </div>
+
+              {/* Present Button - Mobile */}
+              <button
+                onClick={() => {
+                  togglePresentation()
+                  setIsMobileMenuOpen(false)
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-ciro-500 hover:bg-ciro-600 rounded-lg transition-colors mb-4"
+              >
+                {isPresenting ? <Pause size={16} /> : <Play size={16} />}
+                Present
+              </button>
+            </div>
+
+            {/* Slide List */}
+            <div className="space-y-1 max-h-[60vh] overflow-y-auto">
+              {slides.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  onClick={() => goToSlide(index)}
+                  className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-colors ${
+                    index === currentSlide
+                      ? 'bg-ciro-500 text-white'
+                      : 'hover:bg-dark-700 text-gray-300'
+                  }`}
+                >
+                  <span className="font-mono text-xs mr-3 opacity-70">{slide.id}.</span>
+                  <span className="leading-tight">{slide.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Slide Navigation Menu */}
+      {!isPresenting && (
+        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:block">
           <div className="bg-dark-800/80 backdrop-blur-sm rounded-lg border border-dark-600 p-2 max-w-64">
             {slides.map((slide, index) => (
               <button

@@ -16,7 +16,7 @@ export default function SolutionSlideNew() {
           className="text-center mb-6"
         >
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            Your Data Scientist,
+            Your AI Team,
           </h1>
           <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-ciro-400 via-orange-400 to-blue-400 bg-clip-text text-transparent">
             Operating 24/7
@@ -31,9 +31,9 @@ export default function SolutionSlideNew() {
           className="text-center mb-6"
         >
           <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto">
-            Imagine having a data scientist, a vision engineer, and an operational analyst
+            A complete intelligence team of specialized AI agents
             <br />
-            <span className="text-transparent bg-gradient-to-r from-ciro-400 to-orange-400 bg-clip-text font-semibold">working together — every day, all the time.</span>
+            <span className="text-transparent bg-gradient-to-r from-ciro-400 to-orange-400 bg-clip-text font-semibold">monitoring, analyzing, and responding instantly.</span>
           </p>
         </motion.div>
 
@@ -47,19 +47,19 @@ export default function SolutionSlideNew() {
           {[
             {
               icon: Brain,
-              title: 'Data Scientist 24/7',
+              title: 'Data Intelligence Agent',
               description: 'Analyzes patterns, generates insights, and creates predictive models automatically',
               gradient: 'from-purple-500 to-indigo-500'
             },
             {
               icon: Shield,
-              title: 'Security Vigilants 24/7',
+              title: 'Security Monitor Agent',
               description: 'Monitors threats, detects anomalies, and responds to incidents in real-time',
               gradient: 'from-red-500 to-orange-500'
             },
             {
               icon: Eye,
-              title: 'Vision Engineer 24/7',
+              title: 'Vision Quality Agent',
               description: 'Watches cameras, identifies defects, and ensures quality with 99.8% accuracy',
               gradient: 'from-blue-500 to-cyan-500'
             }
