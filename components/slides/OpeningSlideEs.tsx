@@ -66,7 +66,7 @@ export default function OpeningSlideEs() {
             {/* Main CIRO hub */}
             <div className="relative w-24 h-24 bg-gradient-to-br from-white via-gray-100 to-gray-200 rounded-full flex items-center justify-center shadow-xl border-2 border-ciro-500/50">
               <img
-                src="/images/ciro-white.png"
+                src="/images/Ciro Icon White.svg"
                 alt="CIRO"
                 className="w-14 h-14 object-contain"
                 style={{ filter: 'invert(1)' }}

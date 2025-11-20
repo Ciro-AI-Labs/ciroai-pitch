@@ -127,7 +127,7 @@ export default function ClosingSlideEs() {
               {/* CIRO Logo */}
               <div className="flex justify-center mb-2">
                 <img 
-                  src="/images/ciro-logo-white-complete.png" 
+                  src="/images/Ciro Logo Full White.svg" 
                   alt="CIRO AI" 
                   className="h-8 w-auto"
                 />
