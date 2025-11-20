@@ -5,24 +5,24 @@ import Image from 'next/image'
 
 const teamMembers = [
   {
-    name: 'Victor Amaya',
+    name: 'Diego Aparicio',
     title: 'CEO',
+    subtitle: 'Capital & Strategy Leader',
+    background: 'Led capital raising, deal sourcing, capital deployment, business development, and cross-functional team building across private equity, institutional portfolios, and tech ventures at J.P. Morgan, Clark Street Capital, and The Pulse',
+    expertise: ['Operations and Finance', 'Commercial Business Strategy', 'Capital Raising and Structuring'],
+    companies: ['J.P. Morgan', 'Clark Street Capital', 'The Pulse'],
+    color: 'from-orange-500 to-red-600',
+    image: '/images/Diegoaparicio.jpeg',
+  },
+  {
+    name: 'Victor Amaya',
+    title: 'CTO',
     subtitle: '2x Exited Founder',
     background: 'Architected real-time engines for Kraken, Skalex, ViRSE, Nvidia',
     expertise: ['Real-time Systems', 'Scalable Architecture', 'Financial Tech'],
     companies: ['Kraken', 'Skalex', 'ViRSE', 'Nvidia'],
-    color: 'from-orange-500 to-red-600',
-    image: '/images/UgY3lK5y_400x400.jpg',
-  },
-  {
-    name: 'Gloria Polio',
-    title: 'COO',
-    subtitle: 'Industrial Operations Leader',
-    background: 'Implemented ISO/HACCP systems at Diana, Vitali, Sygma Alimentos, Grupo Calvo',
-    expertise: ['Industrial Operations', 'Compliance Systems', 'Process Optimization'],
-    companies: ['Diana', 'Vitali', 'Sygma Alimentos', 'Grupo Calvo'],
     color: 'from-blue-500 to-cyan-600',
-    image: '/images/gloriaheadhost.jpeg',
+    image: '/images/UgY3lK5y_400x400.jpg',
   },
 ]
 

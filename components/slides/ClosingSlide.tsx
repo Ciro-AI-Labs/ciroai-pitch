@@ -7,13 +7,13 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'victor.amaya@ciroai.us',
+    value: 'diego.aparicio@ciroai.us',
     color: 'text-orange-400',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'vamaya',
+    value: 'diego-aparicio',
     color: 'text-blue-400',
   },
   {
@@ -25,7 +25,7 @@ const contactInfo = [
   {
     icon: MessageCircle,
     label: 'Telegram',
-    value: '@vaamx',
+    value: '@diegoaparicio',
     color: 'text-purple-400',
   },
 ]

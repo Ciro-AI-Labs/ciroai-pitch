@@ -83,7 +83,7 @@ export default function FutureSlideEs() {
                 </div>
               </div>
               
-              <p className="text-orange-400 font-bold text-sm">— Victor, CEO</p>
+              <p className="text-orange-400 font-bold text-sm">— Victor, CTO</p>
             </div>
           </div>
         </div>
