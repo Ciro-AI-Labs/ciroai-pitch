@@ -206,6 +206,14 @@ export default function PitchDeck() {
     }
   }
 
+  const nextSlide = useCallback(() => {
+    setCurrentSlide(prev => (prev + 1) % slides.length)
+  }, [slides.length])
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length)
+  }, [slides.length])
+
   const togglePresentation = useCallback(async () => {
     if (!isPresenting) {
       setIsPresenting(true)
@@ -277,14 +285,6 @@ export default function PitchDeck() {
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [nextSlide, prevSlide, isPresenting, togglePresentation])
-
-  const nextSlide = useCallback(() => {
-    setCurrentSlide(prev => (prev + 1) % slides.length)
-  }, [slides.length])
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length)
-  }, [slides.length])
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
