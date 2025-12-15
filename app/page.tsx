@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Play, Pause, Menu, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Pause, Menu, X, Lock } from 'lucide-react'
 
 // Import slide components - English
 import OpeningSlide from '../components/slides/OpeningSlide'
@@ -68,6 +68,9 @@ const slidesData = {
 }
 
 export default function PitchDeck() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState('')
+  const [showError, setShowError] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPresenting, setIsPresenting] = useState(false)
   const [timeOnSlide, setTimeOnSlide] = useState(0)
@@ -83,6 +86,96 @@ export default function PitchDeck() {
   
   // Get slides for current language
   const slides = slidesData[language as keyof typeof slidesData]
+
+  // Check for saved authentication on mount
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('ciro_pitch_auth')
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true)
+    }
+  }, [])
+
+  // Handle password submission
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (password === 'Ciro25') {
+      setIsAuthenticated(true)
+      localStorage.setItem('ciro_pitch_auth', 'true')
+      setShowError(false)
+    } else {
+      setShowError(true)
+      setPassword('')
+    }
+  }
+
+  // If not authenticated, show login screen
+  if (!isAuthenticated) {
+    return (
+      <div className="h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white overflow-hidden flex items-center justify-center">
+        <div className="w-full max-w-md px-6">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/images/Ciro Logo Full White.svg" 
+              alt="CIRO AI" 
+              className="h-12 w-auto"
+            />
+          </div>
+
+          {/* Login Card */}
+          <div className="bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-xl p-8 shadow-2xl">
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                <Lock className="w-8 h-8 text-white" />
+              </div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-white text-center mb-2">
+              Protected Content
+            </h1>
+            <p className="text-gray-400 text-center mb-6">
+              Enter password to access the pitch deck
+            </p>
+
+            <form onSubmit={handlePasswordSubmit}>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                  autoFocus
+                />
+              </div>
+
+              {showError && (
+                <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+                  <p className="text-red-400 text-sm text-center">
+                    Incorrect password. Please try again.
+                  </p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-lg font-semibold text-white transition-all shadow-lg hover:shadow-xl"
+              >
+                Access Pitch Deck
+              </button>
+            </form>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center mt-6">
+            <p className="text-gray-500 text-sm">
+              © 2025 CIRO AI Labs. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Fullscreen functionality
   const enterFullscreen = async () => {
