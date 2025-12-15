@@ -276,15 +276,15 @@ export default function PitchDeck() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentSlide, isPresenting, togglePresentation])
+  }, [nextSlide, prevSlide, isPresenting, togglePresentation])
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(prev => (prev + 1) % slides.length)
-  }, [])
+  }, [slides.length])
 
   const prevSlide = useCallback(() => {
     setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length)
-  }, [])
+  }, [slides.length])
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
